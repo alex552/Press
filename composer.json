@@ -1,0 +1,9 @@
+{
+    "name": "ale552/press",
+    "description": "markdown-powered blog for Laravel framework",
+    "license": "MIT",
+    "require": {},
+    "require-dev": {
+        "orchestra/testbench": "^4.0"
+    }
+}
