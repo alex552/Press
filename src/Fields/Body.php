@@ -4,13 +4,14 @@
 namespace alex552\Press\Fields;
 
 
-use Carbon\Carbon;
 
-class Date
+use alex552\Press\MarkdownParser;
+
+class Body
 {
     public static function process($type,$value){
         return [
-            $type => Carbon::parse($value),
+            $type => MarkdownParser::parse($value),
         ];
     }
 }

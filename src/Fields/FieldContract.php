@@ -5,9 +5,21 @@ namespace alex552\Press\Fields;
 
 
 
-use alex552\Press\MarkdownParser;
-
-class Title
+abstract class FieldContract
 {
-    
+    /**
+     * Process the field and make any modifications.
+     *
+     * @param $fieldType
+     * @param $fieldValue
+     * @param $data
+     *
+     * @return array
+     */
+    public static function process($fieldType, $fieldValue, $data)
+    {
+        return [
+            $fieldType => $fieldValue
+        ];
+    }
 }

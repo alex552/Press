@@ -5,13 +5,16 @@ namespace alex552\Press\Fields;
 
 
 
-use alex552\Press\MarkdownParser;
-
-class Body
+class Extra extends FieldContract
 {
-    public static function process($type,$value){
+
+    public static function process($fieldType, $fieldValue, $data)
+    {
+        $extra = isset($data['extra']) ? (array)json_decode($data['extra']) : [];
         return [
-            $type => MarkdownParser::parse($value),
+            'extra' => json_encode(array_merge($extra, [
+                $fieldType => $fieldValue,
+            ]))
         ];
     }
 }
