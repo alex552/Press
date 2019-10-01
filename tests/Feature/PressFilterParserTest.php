@@ -5,6 +5,7 @@ namespace alex552\Press\Tests;
 
 
 use alex552\Press\PressFileParser;
+use Carbon\Carbon;
 use Orchestra\Testbench\TestCase;
 
 class PressFilterParserTest extends TestCase
@@ -14,9 +15,9 @@ class PressFilterParserTest extends TestCase
     {
         $pressFileParser = (new PressFileParser(__DIR__.'/../blog/markdown.md'));
         $data = $pressFileParser->getRawData();
-        $this->assertContains('title: title', $data[1]);
-        $this->assertContains('description: description', $data[1]);
-        $this->assertContains('body text', $data[2]);
+        $this->assertStringContainsStringIgnoringCase('title: title', $data[1]);
+        $this->assertStringContainsStringIgnoringCase('description: description', $data[1]);
+        $this->assertStringContainsStringIgnoringCase('body text', $data[2]);
     }
 
     /** @test */
@@ -24,23 +25,23 @@ class PressFilterParserTest extends TestCase
     {
         $pressFileParser = (new PressFileParser("---\ntitle: My Title\n---\nBlog post body here"));
         $data = $pressFileParser->getRawData();
-        $this->assertContains('title: My Title', $data[1]);
-        $this->assertContains('Blog post body here', $data[2]);
+        $this->assertStringContainsStringIgnoringCase('title: My Title', $data[1]);
+        $this->assertStringContainsStringIgnoringCase('Blog post body here', $data[2]);
     }
     /** @test */
     public function each_head_field_gets_separated()
     {
         $pressFileParser = (new PressFileParser(__DIR__.'/../blog/markdown.md'));
         $data = $pressFileParser->getData();
-        $this->assertEquals('My Title', $data['title']);
-        $this->assertEquals('Description here', $data['description']);
+        $this->assertEquals('title', $data['title']);
+        $this->assertEquals('description', $data['description']);
     }
     /** @test */
     public function the_body_gets_saved_and_trimmed()
     {
         $pressFileParser = (new PressFileParser(__DIR__.'/../blog/markdown.md'));
         $data = $pressFileParser->getData();
-        $this->assertEquals("<h1>Heading</h1>\n<p>Blog post body here</p>", $data['body']);
+        $this->assertEquals("<h1>Heading</h1>\n<p>body text</p>", $data['body']);
     }
     /** @test */
     public function a_date_field_gets_parsed()
